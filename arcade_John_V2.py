@@ -14,7 +14,6 @@ for a in range(1, h+1):
         count += 1
 
 transMat = [ [] for y in range( (h+2)*(h+2) ) ] 
-currentRow, holeIdx = 1, 0    
 
 for a in range(1, h+1):
     for b in range(1, a+1):
@@ -29,18 +28,19 @@ for a in range(1, h+1):
 Vpi = [0 for i in range( (h+2)*(h+2) )]
 Vpi[1 + h + 2] = 1.0
 
-Vlen = len(Vpi)
-Mlen = len(transMat)
+Vlen = (h+2)*(h+2)
+Mlen = (h+2)*(h+2)
 
 P_BallNotInHole = 1
 ans = 0.0
+
+switch = False
 
 while P_BallNotInHole > 1e-6:
     Vtemp = [0 for i in range( (h+2)*(h+2) )]
     for row in range(Vlen):
         for (idx, val) in transMat[row]:
             if idx >= Vlen: # stop
-                # print("idx:",idx, idx-Vlen)
                 ans += node[idx-Vlen]*Vpi[row]*val
                 P_BallNotInHole -= Vpi[row]*val
             else:
